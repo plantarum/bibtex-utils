@@ -40,6 +40,7 @@
 ;;
 ;;; Code:
 (require 'bibtex)
+(require 'reftex)
 
 ;;;;;;;;;;;;;;
 ;; Keywords ;;
