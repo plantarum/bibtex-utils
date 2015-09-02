@@ -40,11 +40,13 @@
 ;;
 ;;; Code:
 (require 'bibtex)
+(require 'reftex)
 
 ;;;;;;;;;;;;;;
 ;; Keywords ;;
 ;;;;;;;;;;;;;;
 
+(defvar bu-keywords-values)
 (make-variable-buffer-local 'bu-keywords-values)
 (make-obsolete-variable 'bibtex-keywords-values "Bibtex-utils \n
 functions and variables are now prefixed with bu-, not bibtex-")
