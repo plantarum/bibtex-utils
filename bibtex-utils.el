@@ -6,9 +6,9 @@
 ;;
 ;; Original Author: bzg AT altern DOT org
 ;; Author: Tyler Smith <tyler@plantarum.ca>
-;; Version: 0.2
+;; Version: 0.3
 ;; Keywords: bibtex
-;; URL: https://bitbucket.org/tws/bibtex-utils
+;; URL: https://github.com/plantarum/bibtex-utils
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
