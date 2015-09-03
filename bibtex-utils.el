@@ -48,8 +48,10 @@
 
 (defvar bu-keywords-values)
 (make-variable-buffer-local 'bu-keywords-values)
-(make-obsolete-variable 'bibtex-keywords-values "Bibtex-utils \n
-functions and variables are now prefixed with bu-, not bibtex-")
+(make-obsolete-variable
+ 'bibtex-keywords-values
+ "Bibtex-utils functions and variables are now prefixed with bu-, not bibtex-"
+ "06 July 2014")
 
 (defun bu-parse-keywords-values ()
   (setq bu-keywords-values (bu-collect-keywords-values)))
@@ -201,7 +203,7 @@ Otherwise, move to the beginning of the current entry."
   (if (> (point) 
          (save-excursion
            (goto-char (window-end))
-           (previous-line 2)
+           (forward-line -2)
            (point)))
       (recenter 2)))
 
