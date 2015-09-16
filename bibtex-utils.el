@@ -214,14 +214,18 @@ Otherwise, move to the beginning of the current entry."
 ;; Bibtex Search Results Buffer ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defvar bibtex-search-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "b" 'bury-buffer)
+    (define-key map "k" (lambda () (interactive) (kill-buffer nil)))
+    (define-key map "q" (lambda () (interactive) (kill-buffer nil)))
+    (define-key map "n" 'bu-next-entry)
+    (define-key map "p" 'bu-previous-entry)
+    map))
+
 (define-minor-mode bibtex-search-minor-mode
   "A minor mode for manipulating the results of bibtex search."
-  nil nil
-  '(("b" . bury-buffer)
-    ("k" . #'(lambda () (interactive) (kill-buffer nil)))
-    ("q" . #'(lambda () (interactive) (kill-buffer nil)))
-    ("n" . #'(lambda () (interactive) (bu-next-entry)))
-    ("p" . #'(lambda () (interactive) (bu-previous-entry)))))
+  nil nil)
 
 (defun bibtex-search-mode-check ()
   "Checks if the current buffer is the bibtex-search-buffer, and if so,
