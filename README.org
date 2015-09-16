@@ -107,3 +107,4 @@ possible to add some convenient key-bindings to use here:
 | q   | ~kill-buffer~       |
 | n   | ~bu-next-entry~     |
 | p   | ~bu-previous-entry~ |
+| RET | ~bu-open-doc~       |
