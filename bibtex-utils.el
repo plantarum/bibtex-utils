@@ -142,32 +142,36 @@ Note that chromium doesn't really work with this yet."
   :group 'bibtex-utils)
 
 (defun bu-open-doc ()
-    "Open the document for the current bibtex entry.
+  "Open the document for the current bibtex entry.
 First tries to open a pdf based on the entry key. Failing that, it will
 check for a doi, and finally a url. Assumes the pdf has the same name
 as the bibtex key, and is present in `bu-pdf-dir'. See also `bu-doi-prefix',
 `bu-doi-resolver', `bu-pdf-viewer'"
   (interactive)
-  (save-excursion
-    (bibtex-beginning-of-entry)
-    (let* ((bpe (bibtex-parse-entry))
-           (file-name (concat bu-pdf-dir
-                              (cdr (assoc "=key=" bpe))
-                              ".pdf"))
-           (doi (assoc "doi" bpe))
-           (url (or (assoc "url" bpe)
-                    (assoc "URL" bpe))))
-      (cond ((file-exists-p file-name)
-             (if bu-pdf-viewer
-                 (async-shell-command (concat bu-pdf-viewer " " file-name))
-               (find-file file-name)))
-            (doi
-             (async-shell-command
-              (concat bu-doi-resolver " " bu-doi-prefix
-                      (replace-regexp-in-string "{\\|}\\|\"" ""  (cdr doi)))))
-            (url
-             (browse-url (replace-regexp-in-string "{\\|}\\|\"" ""  (cdr url))))
-            (t (message "File doesn't exist, and no doi present!"))))))
+  ;; Note that save-excursion would fail here, as when a file exists we
+  ;; move focus to a new buffer and leave it there, before point is
+  ;; restored in the original buffer. So we need to reset it ourselves.
+  (let* ((start-pos (point))
+         (bpe (progn (bibtex-beginning-of-entry)
+                     (bibtex-parse-entry)))
+         (file-name (concat bu-pdf-dir
+                            (cdr (assoc "=key=" bpe))
+                            ".pdf"))
+         (doi (assoc "doi" bpe))
+         (url (or (assoc "url" bpe)
+                  (assoc "URL" bpe))))
+    (goto-char start-pos)
+    (cond ((file-exists-p file-name)
+           (if bu-pdf-viewer
+               (async-shell-command (concat bu-pdf-viewer " " file-name))
+             (find-file file-name)))
+          (doi
+           (async-shell-command
+            (concat bu-doi-resolver " " bu-doi-prefix
+                    (replace-regexp-in-string "{\\|}\\|\"" ""  (cdr doi)))))
+          (url
+           (browse-url (replace-regexp-in-string "{\\|}\\|\"" ""  (cdr url))))
+          (t (message "File doesn't exist, and no doi present!")))))
 
 (defun bu-jump-to-doc ()
   "Open the document associated with the bibtex citation at point."
@@ -221,6 +225,7 @@ Otherwise, move to the beginning of the current entry."
     (define-key map "q" (lambda () (interactive) (kill-buffer nil)))
     (define-key map "n" 'bu-next-entry)
     (define-key map "p" 'bu-previous-entry)
+    (define-key map (kbd "RET") 'bu-open-doc)
     map))
 
 (define-minor-mode bibtex-search-minor-mode
