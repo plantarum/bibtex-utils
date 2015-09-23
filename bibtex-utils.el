@@ -141,13 +141,18 @@ For chromium with the DOI resolver extension, it should be 'doi '.
 Note that chromium doesn't really work with this yet."
   :group 'bibtex-utils)
 
-(defun bu-open-doc ()
+(defun bu-open-doc (PREF)
   "Open the document for the current bibtex entry.
 First tries to open a pdf based on the entry key. Failing that, it will
 check for a doi, and finally a url. Assumes the pdf has the same name
-as the bibtex key, and is present in `bu-pdf-dir'. See also `bu-doi-prefix',
+as the bibtex key, and is present in `bu-pdf-dir'.
+
+With a prefix argument, local files will be ignored, allowing you to
+immediately jump to the online version.
+
+See also `bu-doi-prefix',
 `bu-doi-resolver', `bu-pdf-viewer'"
-  (interactive)
+  (interactive "P")
   ;; Note that save-excursion would fail here, as when a file exists we
   ;; move focus to a new buffer and leave it there, before point is
   ;; restored in the original buffer. So we need to reset it ourselves.
@@ -161,7 +166,7 @@ as the bibtex key, and is present in `bu-pdf-dir'. See also `bu-doi-prefix',
          (url (or (assoc "url" bpe)
                   (assoc "URL" bpe))))
     (goto-char start-pos)
-    (cond ((file-exists-p file-name)
+    (cond ((and (not PREF) (file-exists-p file-name))
            (if bu-pdf-viewer
                (async-shell-command (concat bu-pdf-viewer " " file-name))
              (find-file file-name)))
