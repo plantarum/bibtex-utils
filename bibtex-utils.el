@@ -187,7 +187,7 @@ See also `bu-doi-prefix',
                                       (condition-case nil
                                           (reftex-get-bibfile-list)
                                         (error reftex-default-bibliography)))
-          (bu-open-doc)
+          (bu-open-doc nil)
         (set-window-configuration state)
         (message "No .bib file available!")))))
 
