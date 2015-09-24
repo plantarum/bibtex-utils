@@ -247,3 +247,4 @@ turns on bibtex-minor-mode to provide a few useful keybindings."
 
 (provide 'bibtex-utils)
 
+;;; bibtex-utils.el ends here
