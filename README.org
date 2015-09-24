@@ -76,6 +76,9 @@ doesn't, it will check for a doi, and open that if it exists. Finally, it
 will try to browse to the url. I'm planning to make the order of priority
 customizable in the near future.
 
+If you call ~bu-doc~ with a prefix, it will ignore any local pdf files, and 
+try to open the doi or url instead.
+
 ** bu-jump-to-doc
 
 This function will jump from a bibtex citation in a source document
