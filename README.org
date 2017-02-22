@@ -36,10 +36,26 @@ These functions assume that keywords consist of phrases with no commas;
 commas are interpreted as separators between keywords. Newlines are
 ignored, so keywords can span multiple lines.
 
+** Cleaning entries
+   When we add bibtex entries we collect from online sources, they often
+   contain fields that we don't wish to keep. ~bibtex-utils~ provides a
+   convenient way to delete these fields when you run the command
+   ~bibtex-clean-entry~. This command is provided by the built-in Emacs
+   ~bibtex-mode~, and is bound to ~C-c C-c~ by default. 
+
+   ~bibtex-utils~ adds a hook that calls the function
+   ~bu-bibtex-clean-entry-hook~. This will delete any fields listed in the
+   variable ~bu-bibtex-fields-ignore-list~ from the entry. By default, this
+   variable is empty, but you can customize it to contain any fields you
+   want automatically deleted from entries.
+
+   I found this very useful function on [[https://nickhigham.wordpress.com/2016/01/06/managing-bibtex-files-with-emacs/][Nick Higham's blog]], where it was
+   contributed by a user named Bernhard. Thanks Bernhard!
+   
 ** Viewing documents
 
-~bibtex-utils~ also provides a mechanism to open the documents (pdfs,
-webpages) for a given bibtex entry.
+   ~bibtex-utils~ also provides a mechanism to open the documents (pdfs,
+   webpages) for a given bibtex entry.
 
 *** pdfs
 
@@ -82,33 +98,33 @@ ignore any local pdf files, and try to open the doi or url instead.
 
 ** bu-jump-to-doc
 
-This function will jump from a bibtex citation in a source document
-directly to the document itself (i.e., the pdf or webpage). It's a wrapper
-to ~bu-open-doc~ that works when you're not already on the bibtex entry.
-If you use bibtex keys in different file types (org mode, markdown, latex
-etc), you may want to bind this to a global key:
+   This function will jump from a bibtex citation in a source document
+   directly to the document itself (i.e., the pdf or webpage). It's a
+   wrapper to ~bu-open-doc~ that works when you're not already on the
+   bibtex entry. If you use bibtex keys in different file types (org mode,
+   markdown, latex etc), you may want to bind this to a global key:
 
-#+BEGIN_SRC 
-(global-set-key [f9] 'bu-jump-to-doc)
-#+END_SRC
+   #+BEGIN_SRC 
+   (global-set-key [f9] 'bu-jump-to-doc)
+   #+END_SRC
 
-Note: ~bibtex-utils~ does not provide a way to jump from a bibtex citation
-to the bibtex entry in the ~.bib~ file. Reftex already does this. The
-function is called ~reftex-view-crossref~, which is bound to ~C-c &~ by
-default.
+   Note: ~bibtex-utils~ does not provide a way to jump from a bibtex
+   citation to the bibtex entry in the ~.bib~ file. Reftex already does
+   this. The function is called ~reftex-view-crossref~, which is bound to
+   ~C-c &~ by default.
 
 ** *BibTeX Search*
 
-When you search for entries from BibTeX mode, the results are placed in a
-buffer called ~*BibTeX Search*~. This is a read only buffer in BibTeX mode.
-I have added a new minor mode, ~bibtex-search-minor-mode~ to make it
-possible to add some convenient key-bindings to use here:
+   When you search for entries from BibTeX mode, the results are placed in
+   a buffer called ~*BibTeX Search*~. This is a read only buffer in BibTeX
+   mode. I have added a new minor mode, ~bibtex-search-minor-mode~ to make
+   it possible to add some convenient key-bindings to use here:
 
-| key | command             |
-|-----+---------------------|
-| b   | ~bury-buffer~       |
-| k   | ~kill-buffer~       |
-| q   | ~kill-buffer~       |
-| n   | ~bu-next-entry~     |
-| p   | ~bu-previous-entry~ |
-| RET | ~bu-open-doc~       |
+   | key | command             |
+   |-----+---------------------|
+   | b   | ~bury-buffer~       |
+   | k   | ~kill-buffer~       |
+   | q   | ~kill-buffer~       |
+   | n   | ~bu-next-entry~     |
+   | p   | ~bu-previous-entry~ |
+   | RET | ~bu-open-doc~       |

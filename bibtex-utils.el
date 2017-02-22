@@ -245,6 +245,29 @@ turns on bibtex-minor-mode to provide a few useful keybindings."
 
 (add-hook 'bibtex-mode-hook 'bibtex-search-mode-check)
 
+;;; Auto-clean bibtex entries, removing unwanted fields. Taken from
+;;; https://nickhigham.wordpress.com/2016/01/06/managing-bibtex-files-with-emacs/ 
+(defcustom bu-bibtex-fields-ignore-list nil
+  "Fields to remove automatically when calling 'bibtex-clean-entry',
+\\<bibtex-mode-map> \\[bibtex-clean-entry].
+Code lifted from https://nickhigham.wordpress.com/2016/01/06/managing-bibtex-files-with-emacs/"
+  :type '(repeat string)
+  :group 'bibtex-utils)
+
+(defun bu-bibtex-clean-entry-hook ()
+  (save-excursion
+    (let (bounds)
+      (when (looking-at bibtex-entry-maybe-empty-head)
+        (goto-char (match-end 0))
+        (while (setq bounds (bibtex-parse-field))
+          (goto-char (bibtex-start-of-field bounds))
+          (if (member (bibtex-name-in-field bounds)
+                      bu-bibtex-fields-ignore-list)
+              (kill-region (caar bounds) (nth 3 bounds))
+            (goto-char (bibtex-end-of-field bounds))))))))
+
+(add-hook 'bibtex-clean-entry-hook 'bu-bibtex-clean-entry-hook)
+
 (provide 'bibtex-utils)
 
 ;;; bibtex-utils.el ends here
