@@ -159,7 +159,7 @@ See also `bu-doi-prefix',
   (let* ((start-pos (point))
          (bpe (progn (bibtex-beginning-of-entry)
                      (bibtex-parse-entry)))
-         (file-name (concat bu-pdf-dir
+         (file-name (concat (file-name-as-directory bu-pdf-dir)
                             (cdr (assoc "=key=" bpe))
                             ".pdf"))
          (doi (assoc "doi" bpe))
