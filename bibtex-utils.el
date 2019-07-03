@@ -28,15 +28,26 @@
 ;;
 ;; Put this file into your load-path and the following into your ~/.emacs:
 ;;   (require 'bibtex-utils)
-
+;;
 ;; Bind bu-make-field-keywords to a convenient key:
 ;;   (define-key bibtex-mode-map "\C-ck" 'bu-make-field-keywords)
-
+;;
 ;; This package also provides a minor mode, bibtex-search-minor-mode, which
 ;; is enabled in the search results buffer. At the moment this just
-;; provides a few convenient keybindings: bury the buffer with 'b', or kill
-;; it with 'k' or 'q'. You can add additional bindings with:
-;; (define-key 'bibtex-search-minor-mode-map "j" 'your-function)
+;; provides a few convenient keybindings:
+;;
+;;   | key | command             |
+;;   |-----+---------------------|
+;;   | b   | ~bury-buffer~       |
+;;   | k   | ~kill-buffer~       |
+;;   | q   | ~kill-buffer~       |
+;;   | n   | ~bu-next-entry~     |
+;;   | p   | ~bu-previous-entry~ |
+;;   | RET | ~bu-open-doc~       |
+;;
+;; You can add additional bindings with:
+;;
+;;   (define-key 'bibtex-search-minor-mode-map "j" 'your-function)
 ;;
 ;;; Code:
 (require 'bibtex)
@@ -102,7 +113,7 @@ the body of this command."
                                (progn (setq append nil)
                                       (bibtex-search-forward-field "OPTkeywords" t)))))))
       (bibtex-make-field "keywords" t nil))
-    (skip-chars-backward "}")
+    (skip-chars-backward "}\n")
     (unless arg
       (let ((cnt 0)
             k)

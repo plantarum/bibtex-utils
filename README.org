@@ -1,5 +1,8 @@
 * bibtex-utils.el
 
+~bibtex-utils.el~ provides some simple conveniences for working with BibTeX
+files. More elaborate features are provided by [[https://github.com/tmalsburg/helm-bibtex][helm-bibtex]] and [[https://github.com/jkitchin/org-ref][org-ref]].
+
 To use this package, add the following line to your .emacs:
 
 #+BEGIN_SRC 
