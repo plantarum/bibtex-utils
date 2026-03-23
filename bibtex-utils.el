@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;;; bibtex-utils.el --- Provides utilities for extending BibTeX mode
 
 ;; Copyright (C) 2007 Bastien Guerry
@@ -6,7 +7,7 @@
 ;;
 ;; Original Author: bzg AT altern DOT org
 ;; Author: Tyler Smith <tyler@plantarum.ca>
-;; Version: 0.3
+;; Version: 0.4
 ;; Keywords: bibtex
 ;; URL: https://github.com/plantarum/bibtex-utils
 
