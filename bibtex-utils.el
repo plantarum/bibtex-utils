@@ -245,8 +245,7 @@ Otherwise, move to the beginning of the current entry."
     map))
 
 (define-minor-mode bibtex-search-minor-mode
-  "A minor mode for manipulating the results of bibtex search."
-  nil nil)
+  "A minor mode for manipulating the results of bibtex search.")
 
 (defun bibtex-search-mode-check ()
   "Checks if the current buffer is the bibtex-search-buffer, and if so,
